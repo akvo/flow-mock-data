@@ -99,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() {
         File root = Environment.getExternalStorageDirectory();
         File dir = new File(
-                root.getAbsolutePath() + File.separator + "Akvo Caddisfly" + File.separator + "result-images");
+                root.getAbsolutePath() + File.separator + "Akvo Caddisfly" + File.separator
+                        + "result-images");
         if (!dir.exists()) {
             dir.mkdirs();
         }
