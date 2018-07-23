@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2018 Stichting Akvo (Akvo Foundation)
+ *
+ * This file is part of Akvo Flow.
+ *
+ * Akvo Flow is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Akvo Flow is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Akvo Flow.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package org.akvo.mockcaddisfly
 
 import android.app.Activity
@@ -8,21 +28,15 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-
 import org.akvo.mockcaddisfly.data.FileContent
 import org.akvo.mockcaddisfly.data.GsonMapper
-import org.akvo.mockcaddisfly.data.Result
 import org.akvo.mockcaddisfly.data.ResultBuilder
 import org.akvo.mockcaddisfly.data.Test
-import org.akvo.mockcaddisfly.data.result.TestResult
-
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
-import java.util.ArrayList
-
-import timber.log.Timber
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 

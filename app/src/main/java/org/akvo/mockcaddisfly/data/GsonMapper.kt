@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Stichting Akvo (Akvo Foundation)
+ * Copyright (C) 2018 Stichting Akvo (Akvo Foundation)
  *
  * This file is part of Akvo Flow.
  *
@@ -33,11 +33,7 @@ import timber.log.Timber
 
 class GsonMapper {
 
-    private val mapper: Gson
-
-    init {
-        this.mapper = GsonBuilder().create()
-    }
+    private val mapper: Gson = GsonBuilder().create()
 
     @Throws(JsonSyntaxException::class)
     fun <T> read(content: String, type: Class<T>): T {
