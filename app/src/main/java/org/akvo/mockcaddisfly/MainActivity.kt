@@ -44,12 +44,6 @@ class MainActivity : AppCompatActivity() {
     private val resultBuilder = ResultBuilder()
     private val tests = ArrayList<Test>()
 
-    private val imagePathExtra: String
-        get() {
-            val file = saveImageToFile()
-            return file.absolutePath
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(mockTestResult)) {
             val resultIntent = Intent(intent)
             resultIntent.putExtra("response", mockTestResult)
-            val getImageFilePath = imagePathExtra
+            val getImageFilePath = generateImagePath()
             resultIntent.putExtra("image", getImageFilePath)
             setResult(Activity.RESULT_OK, resultIntent)
         } else {
@@ -81,8 +75,13 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun saveImageToFile(): File {
+    private fun generateImagePath(): String {
         val file = createImageFile()
+        copyResourceToFile(file)
+        return file.absolutePath
+    }
+
+    private fun copyResourceToFile(file: File) {
         val icon = BitmapFactory.decodeResource(resources, R.drawable.caddisfly_img)
         var out: FileOutputStream? = null
         try {
@@ -91,14 +90,8 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Timber.e(e)
         } finally {
-            try {
-                out?.close()
-            } catch (e: IOException) {
-                Timber.e(e)
-            }
-
+            out?.let { FileUtils.close(it) };
         }
-        return file
     }
 
     private fun createImageFile(): File {

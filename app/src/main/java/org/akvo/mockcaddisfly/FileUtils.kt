@@ -62,7 +62,7 @@ object FileUtils {
     /**
      * Helper function to close a Closeable instance
      */
-    private fun close(closeable: Closeable) {
+    fun close(closeable: Closeable) {
         try {
             closeable.close()
         } catch (e: IOException) {
