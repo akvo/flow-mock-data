@@ -57,9 +57,8 @@ class MainActivity : AppCompatActivity() {
         try {
             val content = FileUtils.readText(input)
             val fileContent = gsonMapper.read(content, FileContent::class.java)
-            val fileContentTests = fileContent.tests
-            this.tests.addAll(fileContentTests!!)
-            Timber.d("Found tests: %d", this.tests.size)
+            this.tests.addAll(fileContent.tests)
+            Timber.d("Found tests: ${tests.size}")
         } catch (e: IOException) {
             Timber.e(e, "error reading tests")
         }
@@ -67,9 +66,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val testTypeUuid = intent.getStringExtra("caddisflyResourceUuid")
-        Timber.d("uid: %s", testTypeUuid)
-        val mockTestResult = getMockTestResult(testTypeUuid)
+        val testTypeUuid: String? = intent.getStringExtra("caddisflyResourceUuid")
+        Timber.d("uid: $testTypeUuid")
+        val mockTestResult = testTypeUuid?.let { getMockTestResult(it) }
         if (!TextUtils.isEmpty(mockTestResult)) {
             val resultIntent = Intent(intent)
             resultIntent.putExtra("response", mockTestResult)
@@ -104,18 +103,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun createImageFile(): File {
         val root = Environment.getExternalStorageDirectory()
-        val dir = File(
-                root.absolutePath + File.separator + "Akvo Caddisfly" + File.separator
-                        + "result-images")
+        val dir = File("${root.absolutePath + File.separator}Akvo Caddisfly${File.separator}result-images")
         if (!dir.exists()) {
             dir.mkdirs()
         }
-        return File(dir, "cad_123.png")
+        return File(dir, "${UUID.randomUUID()}.png")
     }
 
-    private fun getMockTestResult(testTypeUuid: String?): String {
-        if (TextUtils.isEmpty(testTypeUuid)) {
-            return ""
+    private fun getMockTestResult(testTypeUuid: String): String {
+        if (testTypeUuid.isEmpty()) {
+            return testTypeUuid
         }
         for (test in tests) {
             val testResultsFromFile = test.results

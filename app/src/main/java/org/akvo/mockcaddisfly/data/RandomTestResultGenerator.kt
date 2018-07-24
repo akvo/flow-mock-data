@@ -27,20 +27,19 @@ class RandomTestResultGenerator {
 
     fun getResultValue(ranges: String): Double {
         Timber.i("ranges $ranges")
-        if (ranges == null || ranges.isEmpty()) {
+        if (ranges.isEmpty()) {
             return DEFAULT_VALUE
         } else {
             val split = ranges.split(",")
             return when {
                 split.isEmpty() -> DEFAULT_VALUE
-                split.size == 1 -> java.lang.Double.parseDouble(split[0])
+                split.size == 1 -> split[0].toDouble()
                 else -> {
-                    val max = java.lang.Double.parseDouble(split[split.size - 1])
-                    val bound = Math.max(max, 1.0).toInt() //cannot be less than 1
-                    var randomDouble = Random().nextInt(bound).toDouble()
-                    val min = java.lang.Double.parseDouble(split[0])
-                    randomDouble = Math.min(Math.max(randomDouble, min), max)
-                    randomDouble
+                    val max = split[split.size - 1].toDouble()
+                    val bound = Math.max(max, 1.0).toInt() // cannot be less than 1
+                    val randomDouble = Random().nextInt(bound).toDouble()
+                    val min = split[0].toDouble()
+                    Math.min(Math.max(randomDouble, min), max)
                 }
             }
         }

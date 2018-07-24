@@ -20,4 +20,4 @@
 
 package org.akvo.mockcaddisfly.data.result
 
-class App(var appVersion: String?, var language: String?)
+class App(var appVersion: String, var language: String)

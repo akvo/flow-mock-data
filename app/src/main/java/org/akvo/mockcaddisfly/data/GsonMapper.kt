@@ -47,7 +47,7 @@ class GsonMapper {
     }
 
     @Throws(JsonSyntaxException::class)
-    fun <T> read(content: String, type: Type): T? {
+    fun <T> read(content: String, type: Type): T {
         try {
             return this.mapper.fromJson<T>(content, type)
         } catch (e: JsonSyntaxException) {
