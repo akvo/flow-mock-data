@@ -37,14 +37,11 @@ class ResultBuilder {
         val user = UserFactory.createDefaultUser()
         val results = ArrayList<Result>(testResultsFromFile.size)
         for (result in testResultsFromFile) {
-            val resultValue = randomTestResultGenerator.getResultValue(test.ranges).toString() + ""
-            results.add(
-                    Result(result.id, result.name, result.unit, resultValue))
+            val resultValue = test.ranges?.let { randomTestResultGenerator.getResultValue(it).toString() } + ""
+            results.add(Result(result.id, result.name, result.unit, resultValue))
         }
-        val date = SimpleDateFormat(DATE_TIME_FORMAT, Locale.US)
-                .format(Calendar.getInstance().time)
-        return TestResult(date, app, results, test.name, device, test.uuid,
-                DEFAULT_TYPE, user)
+        val date = SimpleDateFormat(DATE_TIME_FORMAT, Locale.US).format(Calendar.getInstance().time)
+        return TestResult(date, app, results, test.name, device, test.uuid, DEFAULT_TYPE, user)
     }
 
     companion object {

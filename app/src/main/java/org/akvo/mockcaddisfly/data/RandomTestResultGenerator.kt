@@ -25,7 +25,7 @@ import java.util.*
 
 class RandomTestResultGenerator {
 
-    fun getResultValue(ranges: String?): Double {
+    fun getResultValue(ranges: String): Double {
         Timber.i("ranges $ranges")
         if (ranges == null || ranges.isEmpty()) {
             return DEFAULT_VALUE

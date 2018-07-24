@@ -45,7 +45,7 @@ object FileUtils {
         } finally {
             close(inputStream)
             arrayOutputStream?.flush()
-            close(arrayOutputStream)
+            arrayOutputStream?.let { close(it) }
         }
     }
 
@@ -62,10 +62,7 @@ object FileUtils {
     /**
      * Helper function to close a Closeable instance
      */
-    private fun close(closeable: Closeable?) {
-        if (closeable == null) {
-            return
-        }
+    private fun close(closeable: Closeable) {
         try {
             closeable.close()
         } catch (e: IOException) {
