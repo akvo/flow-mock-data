@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MockFlowData</string>
+    <string name="app_description">Mock flow data from external apps. Request the the data from the flow app and this will return you some dummy data.</string>
 </resources>
