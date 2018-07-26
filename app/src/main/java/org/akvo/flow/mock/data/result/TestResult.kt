@@ -18,7 +18,9 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data.result
+package org.akvo.flow.mock.data.result
 
-class Device(var product: String, var os: String, var model: String, var language: String,
-             var manufacturer: String, var country: String)
+import org.akvo.flow.mock.data.Result
+
+class TestResult(var testDate: String?, var app: App?, var result: List<Result>?, var name: String?, var device: Device?,
+                 var uuid: String?, var type: String?, var user: User?)

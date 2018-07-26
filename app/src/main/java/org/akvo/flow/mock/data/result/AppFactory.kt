@@ -18,6 +18,13 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.flow.mock.data.result
 
-class Result(var id: Int, var name: String?, var unit: String?, var value: String?)
+import org.akvo.flow.mock.BuildConfig
+import java.util.*
+
+object AppFactory {
+    fun createDefaultApp(): App {
+        return App(BuildConfig.VERSION_NAME, Locale.getDefault().language)
+    }
+}

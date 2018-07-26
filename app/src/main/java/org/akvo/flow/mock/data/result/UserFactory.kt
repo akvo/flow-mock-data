@@ -18,9 +18,13 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data.result
+package org.akvo.flow.mock.data.result
 
-import org.akvo.mockcaddisfly.data.Result
+import java.util.*
 
-class TestResult(var testDate: String?, var app: App?, var result: List<Result>?, var name: String?, var device: Device?,
-                 var uuid: String?, var type: String?, var user: User?)
+object UserFactory {
+
+    fun createDefaultUser(): User {
+        return User(true, Locale.getDefault().language)
+    }
+}

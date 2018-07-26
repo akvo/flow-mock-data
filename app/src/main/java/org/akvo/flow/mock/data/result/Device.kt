@@ -18,14 +18,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data.result
+package org.akvo.flow.mock.data.result
 
-import org.akvo.mockcaddisfly.BuildConfig
-
-import java.util.Locale
-
-object AppFactory {
-    fun createDefaultApp(): App {
-        return App(BuildConfig.VERSION_NAME, Locale.getDefault().language)
-    }
-}
+class Device(var product: String, var os: String, var model: String, var language: String,
+             var manufacturer: String, var country: String)

@@ -18,12 +18,12 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.flow.mock.data
 
-import org.akvo.mockcaddisfly.data.result.AppFactory
-import org.akvo.mockcaddisfly.data.result.DeviceFactory
-import org.akvo.mockcaddisfly.data.result.TestResult
-import org.akvo.mockcaddisfly.data.result.UserFactory
+import org.akvo.flow.mock.data.result.AppFactory
+import org.akvo.flow.mock.data.result.DeviceFactory
+import org.akvo.flow.mock.data.result.TestResult
+import org.akvo.flow.mock.data.result.UserFactory
 import java.text.SimpleDateFormat
 import java.util.*
 

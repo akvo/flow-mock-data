@@ -18,7 +18,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.flow.mock.data
 
 import timber.log.Timber
 import java.util.*

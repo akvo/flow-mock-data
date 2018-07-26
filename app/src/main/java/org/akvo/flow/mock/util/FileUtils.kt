@@ -19,7 +19,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly.util
+package org.akvo.flow.mock.util
 
 import java.io.ByteArrayOutputStream
 import java.io.Closeable

@@ -18,6 +18,6 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.flow.mock.data
 
-class FileContent(var tests: List<Test>)
+class Result(var id: Int, var name: String?, var unit: String?, var value: String?)

@@ -18,6 +18,6 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data.result
+package org.akvo.flow.mock.data
 
-class App(var appVersion: String, var language: String)
+class FileContent(var tests: List<Test>)

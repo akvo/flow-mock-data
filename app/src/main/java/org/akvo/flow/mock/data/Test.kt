@@ -18,7 +18,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.flow.mock.data
 
 class Test(var name: String?, var uuid: String?, var ranges: String?,
            var results: List<Result>?)

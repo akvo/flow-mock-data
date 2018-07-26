@@ -18,7 +18,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly
+package org.akvo.flow.mock
 
 import android.app.Activity
 import android.content.Intent
@@ -28,11 +28,11 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import org.akvo.mockcaddisfly.data.FileContent
-import org.akvo.mockcaddisfly.util.GsonMapper
-import org.akvo.mockcaddisfly.data.ResultBuilder
-import org.akvo.mockcaddisfly.data.Test
-import org.akvo.mockcaddisfly.util.FileUtils
+import org.akvo.flow.mock.data.FileContent
+import org.akvo.flow.mock.util.GsonMapper
+import org.akvo.flow.mock.data.ResultBuilder
+import org.akvo.flow.mock.data.Test
+import org.akvo.flow.mock.util.FileUtils
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream

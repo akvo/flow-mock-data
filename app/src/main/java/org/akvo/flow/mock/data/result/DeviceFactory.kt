@@ -18,6 +18,16 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data.result
+package org.akvo.flow.mock.data.result
 
-class User(var isBackDropDetection: Boolean, var language: String)
+import android.os.Build
+import java.util.*
+
+object DeviceFactory {
+
+    fun createDefaultDevice(): Device {
+        return Device(Build.PRODUCT, "Android - " + Build.VERSION.RELEASE + " ("
+                + Build.VERSION.SDK_INT + ")", Build.MODEL, Locale.getDefault().language,
+                Build.MANUFACTURER, Locale.getDefault().country)
+    }
+}
