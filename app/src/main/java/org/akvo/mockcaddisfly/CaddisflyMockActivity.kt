@@ -29,16 +29,17 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import org.akvo.mockcaddisfly.data.FileContent
-import org.akvo.mockcaddisfly.data.GsonMapper
+import org.akvo.mockcaddisfly.util.GsonMapper
 import org.akvo.mockcaddisfly.data.ResultBuilder
 import org.akvo.mockcaddisfly.data.Test
+import org.akvo.mockcaddisfly.util.FileUtils
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class CaddisflyMockActivity : AppCompatActivity() {
 
     private val gsonMapper = GsonMapper()
     private val resultBuilder = ResultBuilder()
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_mock_caddisfly)
         val input = resources.openRawResource(R.raw.tests)
         try {
             val content = FileUtils.readText(input)

@@ -18,7 +18,7 @@
  *
  */
 
-package org.akvo.mockcaddisfly.data
+package org.akvo.mockcaddisfly.util
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
