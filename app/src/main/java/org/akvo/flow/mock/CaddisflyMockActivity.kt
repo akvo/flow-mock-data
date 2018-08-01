@@ -67,8 +67,7 @@ class CaddisflyMockActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(mockTestResult)) {
             val resultIntent = Intent(intent)
             resultIntent.putExtra("response", mockTestResult)
-            val getImageFilePath = generateImagePath()
-            resultIntent.putExtra("image", getImageFilePath)
+            resultIntent.putExtra("image", generateImagePath())
             setResult(Activity.RESULT_OK, resultIntent)
         } else {
             setResult(Activity.RESULT_CANCELED)

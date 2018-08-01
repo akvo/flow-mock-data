@@ -21,13 +21,9 @@
 
 package org.akvo.flow.mock.util
 
-import java.io.ByteArrayOutputStream
-import java.io.Closeable
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-
+import android.support.annotation.Nullable
 import timber.log.Timber
+import java.io.*
 
 object FileUtils {
 
@@ -72,13 +68,29 @@ object FileUtils {
     }
 
     @Throws(IOException::class)
-    private fun copy(input: InputStream, output: OutputStream) {
+    fun copy(input: InputStream, output: OutputStream) {
         val buffer = ByteArray(BUFFER_SIZE)
         var length = input.read(buffer)
 
         while(length != -1) {
             output.write(buffer, 0, length)
             length = input.read(buffer)
+        }
+    }
+
+    @Nullable
+    @Throws(IOException::class)
+    fun copyFile(inputStream: InputStream, destinationFile: File)    {
+        var outputStream: OutputStream? = null
+        try {
+            outputStream = FileOutputStream(destinationFile)
+            copy(inputStream, outputStream)
+            outputStream.flush()
+        } catch (e: FileNotFoundException) {
+            Timber.e(e)
+        } finally {
+            close(inputStream)
+            outputStream?.let { close(it) }
         }
     }
 }
