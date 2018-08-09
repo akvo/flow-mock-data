@@ -22,15 +22,10 @@ package org.akvo.flow.mock
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import org.akvo.flow.mock.util.FileUtils
-import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
+import org.akvo.flow.mock.util.FileUtils.copyImageResourceToFile
 
 class PhotoMockActivity : AppCompatActivity() {
 
@@ -44,25 +39,11 @@ class PhotoMockActivity : AppCompatActivity() {
         val imagePath : Uri? = intent.getParcelableExtra(android.provider.MediaStore.EXTRA_OUTPUT)
         val resultIntent = Intent(intent)
         if (imagePath != null) {
-            copyImage(imagePath)
+            copyImageResourceToFile(imagePath, resources)
             setResult(Activity.RESULT_OK, resultIntent)
         } else {
             setResult(Activity.RESULT_CANCELED)
         }
         finish()
     }
-
-    private fun copyImage(imagePath: Uri) {
-        val icon = BitmapFactory.decodeResource(resources, R.drawable.akvo_image)
-        var out: FileOutputStream? = null
-        try {
-            out = FileOutputStream(File(imagePath.path))
-            icon.compress(Bitmap.CompressFormat.PNG, 100, out)
-        } catch (e: Exception) {
-            Timber.e(e)
-        } finally {
-            out?.let { FileUtils.close(it) };
-        }
-    }
-
 }

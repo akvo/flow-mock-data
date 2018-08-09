@@ -22,10 +22,7 @@ package org.akvo.flow.mock
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import org.akvo.flow.mock.data.FileContent
@@ -33,9 +30,10 @@ import org.akvo.flow.mock.util.GsonMapper
 import org.akvo.flow.mock.data.ResultBuilder
 import org.akvo.flow.mock.data.Test
 import org.akvo.flow.mock.util.FileUtils
+import org.akvo.flow.mock.util.FileUtils.copyImageResourceToFile
+import org.akvo.flow.mock.util.FileUtils.createFile
 import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
@@ -76,31 +74,13 @@ class CaddisflyMockActivity : AppCompatActivity() {
     }
 
     private fun generateImagePath(): String {
-        val file = createImageFile()
-        copyResourceToFile(file)
+        val file = createCaddisflyImageFile()
+        copyImageResourceToFile(file, R.drawable.caddisfly_img, resources)
         return file.absolutePath
     }
 
-    private fun copyResourceToFile(file: File) {
-        val icon = BitmapFactory.decodeResource(resources, R.drawable.caddisfly_img)
-        var out: FileOutputStream? = null
-        try {
-            out = FileOutputStream(file)
-            icon.compress(Bitmap.CompressFormat.PNG, 100, out)
-        } catch (e: Exception) {
-            Timber.e(e)
-        } finally {
-            out?.let { FileUtils.close(it) };
-        }
-    }
-
-    private fun createImageFile(): File {
-        val root = Environment.getExternalStorageDirectory()
-        val dir = File("${root.absolutePath + File.separator}Akvo Caddisfly${File.separator}result-images")
-        if (!dir.exists()) {
-            dir.mkdirs()
-        }
-        return File(dir, "${UUID.randomUUID()}.png")
+    private fun createCaddisflyImageFile(): File {
+        return createFile("Akvo Caddisfly${File.separator}result-images", "${UUID.randomUUID()}.png")
     }
 
     private fun getMockTestResult(testTypeUuid: String): String {

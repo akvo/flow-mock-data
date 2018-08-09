@@ -21,7 +21,13 @@
 
 package org.akvo.flow.mock.util
 
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
 import android.support.annotation.Nullable
+import org.akvo.flow.mock.R
 import timber.log.Timber
 import java.io.*
 
@@ -92,5 +98,36 @@ object FileUtils {
             close(inputStream)
             outputStream?.let { close(it) }
         }
+    }
+
+    fun copyImageResourceToFile(file: File, imageResource: Int, resources: Resources) {
+        val icon = BitmapFactory.decodeResource(resources, imageResource)
+        var out: FileOutputStream? = null
+        try {
+            out = FileOutputStream(file)
+            icon.compress(Bitmap.CompressFormat.PNG, 100, out)
+        } catch (e: Exception) {
+            Timber.e(e)
+        } finally {
+            out?.let { FileUtils.close(it) };
+        }
+    }
+
+    fun copyImageResourceToFile(imagePath: Uri, resources: Resources) {
+        copyImageResourceToFile(File(imagePath.path), R.drawable.akvo_image, resources)
+    }
+
+    fun createFile(folderName: String, fileName: String): File {
+        val dir = createFolder(folderName)
+        return File(dir, fileName)
+    }
+
+    private fun createFolder(folderName: String): File {
+        val root = Environment.getExternalStorageDirectory()
+        val dir = File("${root.absolutePath + File.separator}$folderName")
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
     }
 }
