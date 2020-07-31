@@ -6309,13 +6309,13 @@
       "name": "Nickel",
       "subtype": "bluetooth",
       "md610_id": "256",
-      "uuid": "",
+      "uuid": "1c741fe2-d1af-11ea-87d0-0242ac130003",
       "brand": "Lovibond MD610",
       "imageScale": "centerCrop",
       "reagents": [
         {
           "name": "Nickel-51",
-          "code": "488406017",
+          "code": "424401",
           "reactionTime": 3,
           "type": "powder, liquid"
         },
@@ -6328,9 +6328,53 @@
       "sampleQuantity": "10",
       "ranges": "0.2,7",
       "selectInstruction": "select_test_instruction",
-      "endInstruction": "clean_stirring_rod_deionised",
+      "endInstruction": "clean_deionised",
       "instructions": [
-
+        {
+          "section": [
+            "fill_vial_24_with_3ml_sample_7ml_deionized_water_zero_a",
+            "fill_vial_24_with_3ml_sample_7ml_deionized_water_zero_b",
+            "fill_vial_24_with_3ml_sample_7ml_deionized_water_zero_c",
+            "fill_vial_24_with_3ml_sample_7ml_deionized_water_zero_d",
+            "image:correct_filling_aligning"
+          ]
+        },
+        {
+          "section": [
+            "remove_vial",
+            "image:take_out_vial"
+          ]
+        },
+        {
+          "section": [
+            "add_reagent_1_nickel"
+          ]
+        },
+        {
+          "section": [
+            "mix_shaking",
+            "image:swirl_mix_powder"
+          ]
+        },
+        {
+          "section": [
+            "add_reagent_2_nickel"
+          ]
+        },
+        {
+          "section": [
+            "close_invert_mix",
+            "image:close_swirl_tablet"
+          ]
+        },
+        {
+          "section": [
+            "wipe_place_align_vial_wait_1_a",
+            "wipe_place_align_vial_wait_1_b",
+            "wipe_place_align_vial_wait_1_c",
+            "image:place_vial_test"
+          ]
+        }
       ],
       "results": [
         {
@@ -9868,4 +9912,4 @@
       ]
     }
   ]
-}
+} 
