@@ -29,7 +29,20 @@ import android.os.Environment
 import androidx.annotation.Nullable
 import org.akvo.flow.mock.R
 import timber.log.Timber
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.Closeable
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.zip.Adler32
+import java.util.zip.CheckedOutputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 object FileUtils {
 
@@ -64,11 +77,11 @@ object FileUtils {
     /**
      * Helper function to close a Closeable instance
      */
-    fun close(closeable: Closeable) {
+    private fun close(closeable: Closeable) {
         try {
             closeable.close()
         } catch (e: IOException) {
-            Timber.e(e.message)
+            Timber.e(e)
         }
 
     }
@@ -86,7 +99,7 @@ object FileUtils {
 
     @Nullable
     @Throws(IOException::class)
-    fun copyFile(inputStream: InputStream, destinationFile: File)    {
+    fun copyInputStreamToFile(inputStream: InputStream, destinationFile: File)    {
         var outputStream: OutputStream? = null
         try {
             outputStream = FileOutputStream(destinationFile)
@@ -100,6 +113,24 @@ object FileUtils {
         }
     }
 
+    @Nullable
+    @Throws(IOException::class)
+    fun copyFile(originalFile: File, destinationFile: File)    {
+        var outputStream: OutputStream? = null
+        var inputStream: FileInputStream? = null
+        try {
+            inputStream = FileInputStream(originalFile)
+            outputStream = FileOutputStream(destinationFile)
+            copy(inputStream, outputStream)
+            outputStream.flush()
+        } catch (e: FileNotFoundException) {
+            Timber.e(e)
+        } finally {
+            inputStream?.let { close(it) }
+            outputStream?.let { close(it) }
+        }
+    }
+
     fun copyImageResourceToFile(file: File, imageResource: Int, resources: Resources) {
         val icon = BitmapFactory.decodeResource(resources, imageResource)
         var out: FileOutputStream? = null
@@ -109,17 +140,61 @@ object FileUtils {
         } catch (e: Exception) {
             Timber.e(e)
         } finally {
-            out?.let { FileUtils.close(it) };
+            out?.let { close(it) };
         }
     }
 
     fun copyImageResourceToFile(imagePath: Uri, resources: Resources) {
-        copyImageResourceToFile(File(imagePath.path), R.drawable.akvo_image, resources)
+        copyImageResourceToFile(File(imagePath.path!!), R.drawable.akvo_image, resources)
     }
 
     fun createFile(folderName: String, fileName: String): File {
         val dir = createFolder(folderName)
         return File(dir, fileName)
+    }
+
+
+    fun readZipEntry(file: File?): String {
+        val zipFile = ZipFile(file)
+        val entry = zipFile.entries().nextElement()
+        val bufferedReader = zipFile.getInputStream(entry).bufferedReader()
+        val json = bufferedReader.use { it.readText() }
+        bufferedReader.close()
+        zipFile.close()
+        return json
+    }
+
+    fun writeToZipFile(
+        destinationDataFolder: File?,
+        dataString: String,
+        fileName: String
+    ) {
+        val newFile = File(destinationDataFolder, fileName)
+        writeZipFile(destinationDataFolder!!, newFile.name, dataString)
+    }
+
+    fun obtainFolder(folderName: String): File {
+        val root = Environment.getExternalStorageDirectory()
+        val dir = File("${root.absolutePath + File.separator}$folderName")
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+        return dir
+    }
+
+    @Throws(IOException::class)
+    private fun writeZipFile(zipFolder: File, zipFileName: String, formInstanceData: String) {
+        val zipFile = File(zipFolder, zipFileName)
+        Timber.d("Writing zip to file %s", zipFile.name)
+        val fout = FileOutputStream(zipFile)
+        val checkedOutStream = CheckedOutputStream(fout, Adler32())
+        val zos = ZipOutputStream(checkedOutStream)
+        zos.putNextEntry(ZipEntry("data.json"))
+        val allBytes: ByteArray = formInstanceData.toByteArray()
+        zos.write(allBytes, 0, allBytes.size)
+        zos.closeEntry()
+        zos.close()
+        fout.close()
     }
 
     private fun createFolder(folderName: String): File {
